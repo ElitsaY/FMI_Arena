@@ -1,2 +1,6 @@
 venv
 .env
+
+# python specific
+__pycache__/
+*.py[cod]
