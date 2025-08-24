@@ -1,10 +1,15 @@
+"""Submission models for managing user submissions to problems."""
+
 from enum import Enum
-from app import db
 from dataclasses import asdict, dataclass
 from typing import Optional, Any
 
+from app import db
+
 
 class SubmissionStatus(Enum):
+    """Submission statuses."""
+
     DRAFT = "draft"
     RUNNING = "running"
     SUCCESS = "success"
@@ -14,13 +19,14 @@ class SubmissionStatus(Enum):
         return self.value
 
 
-class Submission(db.Model):
+class Submission(db.Model):  # pylint: disable=R0903
+    """Submission model for user code submissions."""
+
     __tablename__ = "submissions"
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    problem_id = db.Column(db.Integer, db.ForeignKey(
-        "problems.id"), nullable=False)
+    problem_id = db.Column(db.Integer, db.ForeignKey("problems.id"), nullable=False)
     code = db.Column(db.Text, nullable=False)
     code_md5 = db.Column(db.String(32), nullable=False)
     language = db.Column(db.String(50), nullable=False)
@@ -32,6 +38,7 @@ class Submission(db.Model):
     extra_metadata = db.Column(db.JSON)
 
     def to_dict(self):
+        """Convert the Submission instance to a dictionary."""
         return {
             "id": self.id,
             "user_id": self.user_id,
@@ -50,6 +57,8 @@ class Submission(db.Model):
 
 @dataclass
 class TestResult:
+    """Test result for a single test case."""
+
     input: Any
     expected_output: Any
     actual_output: Any
@@ -57,18 +66,23 @@ class TestResult:
     runtime_ms: Optional[float] = None  # Optional, in milliseconds
 
     def to_dict(self):
+        """Convert the TestResult instance to a dictionary."""
         return asdict(self)
 
 
 @dataclass
 class SubmissionResult:
+    """Submission result for a single submission."""
+
     id: int
     output: str
     runtime_ms: int
     passed: bool
 
 
-class SubmissionRequest:
+class SubmissionRequest:  # pylint: disable=R0903
+    """Submission request for creating a new submission."""
+
     def __init__(self, user_id: int, problem_id: int, source_code: str, language: str):
         self.user_id = user_id
         self.problem_id = problem_id
@@ -76,6 +90,9 @@ class SubmissionRequest:
         self.language = language
 
     def to_dict(self):
+        """
+        Convert the SubmissionRequest instance to a dictionary.
+        """
         return {
             "user_id": self.user_id,
             "problem_id": self.problem_id,

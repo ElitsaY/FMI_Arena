@@ -1,7 +1,13 @@
+"""
+Handling submission execution.
+"""
+
+import time
+
 from app import db
 from .models import Submission, SubmissionStatus, SubmissionResult, SubmissionRequest
 from .submission import create_submission
-import time
+
 
 TOTAL_TESTS = 10
 
@@ -9,12 +15,13 @@ TOTAL_TESTS = 10
 def mock_submission_result(
     submission: Submission, runtime_ms: int, passed_tests: int
 ) -> list[SubmissionResult]:
+    """Mock submission result for testing purposes."""
     return [
         SubmissionResult(
             id=submission.id,
             output="Simulated output" if i < passed_tests else "Bad output",
             runtime_ms=runtime_ms,
-            passed=True if i < passed_tests else False,
+            passed=i < passed_tests,
         )
         for i in range(TOTAL_TESTS)
     ]
@@ -23,7 +30,7 @@ def mock_submission_result(
 def execute_submission(
     req: SubmissionRequest, runtime_ms: int, passed_tests: int
 ) -> list[SubmissionResult]:
-    # Simulate code execution
+    """Execute a submission and return the results."""
     print("Executing submission ...")
     submission = create_submission(
         request=req,

@@ -1,12 +1,19 @@
-from app import db
-from .models import Submission, SubmissionStatus, SubmissionRequest
-import hashlib
+"""
+Handling problem submission
+"""
 
+import hashlib
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import desc, case
 
+from app import db
+from .models import Submission, SubmissionStatus, SubmissionRequest
+
 
 def md5_hash(code: str) -> str:
+    """
+    Generate MD5 hash for the given code.
+    """
     return hashlib.md5(code.encode("utf-8")).hexdigest()
 
 
@@ -15,6 +22,9 @@ def create_submission(
     total_tests: int,
     status: SubmissionStatus = SubmissionStatus.DRAFT,
 ) -> Submission:
+    """
+    Create a new submission from request.
+    """
     code_md5 = md5_hash(request.source_code)
 
     existing = Submission.query.filter_by(
@@ -47,6 +57,9 @@ def get_submissions_by_problem(
     problem_id: int,
     created_by: int | None = None,
 ) -> list[Submission]:
+    """
+    List submissions by problem ID and optional creator ID.
+    """
     score = case(
         (
             Submission.total_tests > 0,
