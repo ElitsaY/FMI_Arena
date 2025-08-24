@@ -1,3 +1,4 @@
+from sqlalchemy.exc import IntegrityError
 from app import db
 from .models import Problem
 from sqlalchemy.orm.attributes import flag_modified
@@ -39,9 +40,13 @@ class ProblemService:
             test_cases=test_cases,
             created_by=created_by,
         )
-        self.session.add(problem)
-        self.session.commit()
-        return problem
+        try:
+            self.session.add(problem)
+            self.session.commit()
+            return problem
+        except IntegrityError:
+            self.session.rollback()
+            raise ValueError("Problem with this name already exists")
 
     def assign_tag(self, problem_id: int, tag: str) -> Problem:
         with self.session.begin():  # start a tran

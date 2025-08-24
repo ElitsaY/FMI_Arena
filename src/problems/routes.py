@@ -14,23 +14,21 @@ def list_problems():
 
 @bp.route("/<int:problem_id>", methods=["GET"])
 def get_problem(problem_id):
-    problem = problem_service.get_problem(problem_id)
-    return jsonify(problem.to_dict())
+    try:
+        problem = problem_service.get_problem(problem_id)
+        return jsonify(problem.to_dict())
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 404
 
 
 @bp.route("/", methods=["POST"])
 def create_problem():
     data = request.json
-    problem = problem_service.create_problem(
-        name=data["name"],
-        description=data["description"],
-        input_format=data["input_format"],
-        output_format=data["output_format"],
-        extra_metadata=data.get("extra_metadata", {}),
-        test_cases=data["test_cases"],
-        created_by=data["created_by"],
-    )
-    return jsonify(problem.to_dict()), 201
+    try:
+        problem = problem_service.create_problem(**data)
+        return jsonify(problem.to_dict()), 201
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
 
 
 @bp.route("/<int:problem_id>/tags", methods=["PUT"])
