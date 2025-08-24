@@ -17,7 +17,7 @@ class ProblemService:
     def __init__(self, session=None):
         self.session = session or db.session
 
-    def list_problems(self, tags: list[str] = None) -> list[Problem]:
+    def list_problems(self, tags: list[str] | None = None) -> list[Problem]:
         """
         List all problems, optionally filtered by tags.
         """

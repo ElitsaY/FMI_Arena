@@ -3,9 +3,10 @@ Submissions routes for managing user submissions to problems.
 """
 
 from flask import Blueprint, request, jsonify
+from flask.wrappers import Response
 from .submission import get_submissions_by_problem
 from .execution import execute_submission
-from .models import Submission, SubmissionResult, SubmissionRequest
+from .models import SubmissionRequest
 
 
 bp = Blueprint(
@@ -14,7 +15,7 @@ bp = Blueprint(
 
 
 @bp.route("/", methods=["GET"])
-def fetch_submissions(problem_id: int) -> list[Submission]:
+def fetch_submissions(problem_id: int) -> tuple[Response, int]:
     """Fetch submissions for a specific problem."""
     print("Fetching submissions for problem:", problem_id)
     created_by = request.args.get("created_by", type=int, default=None)
@@ -27,9 +28,12 @@ def fetch_submissions(problem_id: int) -> list[Submission]:
 
 
 @bp.route("/", methods=["POST"])
-def execute_submission_route(problem_id: int) -> list[SubmissionResult]:
+def execute_submission_route(problem_id: int) -> tuple[Response, int]:
     """Execute a user submission for a specific problem."""
     data = request.json
+    if not data:
+        return jsonify({"error": "Missing body"}), 400
+
     submission = SubmissionRequest(
         user_id=data.get("user_id"),
         problem_id=problem_id,

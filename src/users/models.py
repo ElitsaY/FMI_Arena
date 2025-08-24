@@ -3,7 +3,7 @@ User model for representing users in the system.
 """
 
 from enum import Enum
-from infra import db
+from infra import db, Base
 
 
 class Role(Enum):
@@ -22,7 +22,7 @@ class Role(Enum):
         return self.value
 
 
-class User(db.Model):  # pylint: disable=R0903
+class User(Base):  # pylint: disable=R0903
     """
     User model for representing users in the system.
     """

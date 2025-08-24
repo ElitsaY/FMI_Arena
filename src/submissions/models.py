@@ -4,7 +4,7 @@ from enum import Enum
 from dataclasses import asdict, dataclass
 from typing import Optional, Any
 
-from infra import db
+from infra import db, Base
 
 
 class SubmissionStatus(Enum):
@@ -19,7 +19,7 @@ class SubmissionStatus(Enum):
         return self.value
 
 
-class Submission(db.Model):  # pylint: disable=R0903
+class Submission(Base):  # pylint: disable=R0903
     """Submission model for user code submissions."""
 
     __tablename__ = "submissions"

@@ -4,10 +4,10 @@ The TestCase dataclass for representing programming problems and their test case
 """
 
 from dataclasses import dataclass, asdict
-from infra import db
+from infra import db, Base
 
 
-class Problem(db.Model):  # pylint: disable=R0903
+class Problem(Base):  # pylint: disable=R0903
     """
     SQLAlchemy model for storing problem details,
       formats, metadata, test cases, and creator information.
