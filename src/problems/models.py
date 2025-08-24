@@ -1,4 +1,13 @@
 from app import db
+
+"""
+This module defines the Problem SQLAlchemy model and the TestCase dataclass for representing programming problems and their test cases.
+
+Classes:
+    Problem: SQLAlchemy model for storing problem details, formats, metadata, test cases, and creator information.
+    TestCase: Dataclass for representing individual test cases with input and output data.
+"""
+
 from dataclasses import dataclass, asdict
 
 

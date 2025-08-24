@@ -2,9 +2,9 @@ from flask import Flask
 from .config import Config
 from .database import db
 
-from users import users_bp
-from problems import problems_bp
-from submissions import submissions_bp
+from src.users import users_bp
+from src.problems import problems_bp
+from src.submissions import submissions_bp
 
 
 def create_app(config_object=Config):
