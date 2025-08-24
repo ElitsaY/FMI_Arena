@@ -30,7 +30,8 @@ def add_user():
         return jsonify({"error": str(e)}), 400
 
     try:
-        user = create_user(data["first_name"], data["last_name"], data["email"])
+        user = create_user(data["first_name"],
+                           data["last_name"], data["email"])
         return jsonify(user.to_dict()), 201
     except ValueError as e:
         return jsonify({"error": str(e)}), 400

@@ -34,7 +34,8 @@ def execute_submission_route(problem_id: int) -> list[SubmissionResult]:
     try:
         # Execute the submission and return the results
         results = execute_submission(
-            submission, data.get("runtime_ms", 1000), data.get("passed_tests", 7)
+            submission, data.get("runtime_ms", 1000), data.get(
+                "passed_tests", 7)
         )
         return jsonify(results), 200
     except ValueError as e:

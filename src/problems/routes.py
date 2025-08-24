@@ -8,7 +8,8 @@ problem_service = ProblemService()  # shared service instance
 @bp.route("/", methods=["GET"])
 def list_problems():
     tags = request.args.get("tags")
-    problems = problem_service.list_problems(tags=tags.split(",") if tags else None)
+    problems = problem_service.list_problems(
+        tags=tags.split(",") if tags else None)
     return jsonify([p.to_dict() for p in problems])
 
 

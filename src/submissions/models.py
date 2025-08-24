@@ -1,7 +1,7 @@
 from enum import Enum
 from app import db
 from dataclasses import asdict, dataclass
-from typing import List, Optional, Any
+from typing import Optional, Any
 
 
 class SubmissionStatus(Enum):
@@ -19,7 +19,8 @@ class Submission(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    problem_id = db.Column(db.Integer, db.ForeignKey("problems.id"), nullable=False)
+    problem_id = db.Column(db.Integer, db.ForeignKey(
+        "problems.id"), nullable=False)
     code = db.Column(db.Text, nullable=False)
     code_md5 = db.Column(db.String(32), nullable=False)
     language = db.Column(db.String(50), nullable=False)
