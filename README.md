@@ -56,3 +56,11 @@ source .env
 python -m flask run
 
 ```
+
+### Tests
+```
+cd src
+source .env
+pip install -r requirements.txt
+python -m pytest  --cov=. tests/
+```

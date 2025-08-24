@@ -7,3 +7,5 @@ flask-sqlalchemy
 psycopg2-binary
 mypy
 pylint
+pytest
+pytest-cov
