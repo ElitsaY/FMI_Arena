@@ -1,4 +1,9 @@
+dotenv
+passlib
+bcrypt
 flask
 sqlalchemy
 flask-sqlalchemy
-psycopg-binary
+psycopg2-binary
+mypy
+pylint

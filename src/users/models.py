@@ -33,7 +33,7 @@ class User(Base):  # pylint: disable=R0903
     first_name = db.Column(db.String(80), nullable=False)
     last_name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False, default="hashed_password")
+    password = db.Column(db.String(128), nullable=False)
     role = db.Column(db.Enum(Role), default=Role.GUEST)
 
     def to_dict(self):
@@ -45,6 +45,5 @@ class User(Base):  # pylint: disable=R0903
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
-            "password": self.password,
             "role": str(self.role),
         }

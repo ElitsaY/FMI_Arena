@@ -4,7 +4,7 @@ User routes for managing user-related operations.
 
 from flask import Blueprint, request, jsonify
 from flask.wrappers import Response
-from .service import create_user, get_user, list_users
+from .service import create_user, get_user, list_users, login_user
 
 bp = Blueprint("users", __name__, url_prefix="/users")
 
@@ -36,8 +36,28 @@ def add_user() -> tuple[Response, int]:
     Add a new user.
     """
     data = request.get_json()
+    if not data:
+        return jsonify({"error": "Missing user data"}), 400
     try:
-        user = create_user(data["first_name"], data["last_name"], data["email"])
+        user = create_user(
+            data["first_name"], data["last_name"], data["email"], data["password"]
+        )
         return jsonify(user.to_dict()), 201
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+
+@bp.route("/login", methods=["POST"])
+def login() -> tuple[Response, int]:
+    """
+    User login.
+    """
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Missing email or password"}), 400
+
+    try:
+        user = login_user(data["email"], data["password"])
+        return jsonify(user.to_dict()), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400

@@ -38,4 +38,4 @@ CREATE TABLE IF NOT EXISTS submissions (
 
 -- Optional index for fetching user submissions quickly
 CREATE INDEX idx_submissions_problem_user_id ON submissions(problem_id, user_id);
-CREATE UNIQUE INDEX idx_submissions_user_problem ON submissions(user_id, problem_id, code_md5),;
+CREATE UNIQUE INDEX idx_submissions_user_problem ON submissions(user_id, problem_id, code_md5);

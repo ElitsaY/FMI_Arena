@@ -7,10 +7,10 @@ Executes the initial database migration by running the SQL script located at
 
 import os
 from dotenv import load_dotenv
-import psycopg
+import psycopg2 as psycopg  # type: ignore[import]
 
 # Load environment variables
-load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PW = os.getenv("POSTGRES_PW")

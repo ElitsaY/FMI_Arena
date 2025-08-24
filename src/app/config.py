@@ -14,4 +14,3 @@ class Config:  # pylint: disable=R0903
     host = getenv("POSTGRES_HOST")
     port = getenv("POSTGRES_PORT", "5432")
     SQLALCHEMY_DATABASE_URI = f"postgresql://{user}:{password}@{host}:{port}/{dbname}"
-    SQLALCHEMY_TRACK_MODIFICATIONS = False  # performance

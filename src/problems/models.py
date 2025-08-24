@@ -23,7 +23,7 @@ class Problem(Base):  # pylint: disable=R0903
     extra_metadata = db.Column(db.JSON, nullable=True)
     test_cases = db.Column(db.JSON, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    created_by = db.Column(db.Integer, foreign_key="users.id", nullable=False)
+    created_by = db.Column(db.Integer, nullable=False)
 
     def to_dict(self):
         """Convert the Problem instance to a dictionary."""
