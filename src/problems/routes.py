@@ -1,4 +1,9 @@
+"""
+Routes for managing problems-submission related operations.
+"""
+
 from flask import Blueprint, request, jsonify
+from .models import CreateProblemRequest
 from .service import ProblemService
 
 bp = Blueprint("problems", __name__)
@@ -7,14 +12,19 @@ problem_service = ProblemService()  # shared service instance
 
 @bp.route("/", methods=["GET"])
 def list_problems():
+    """
+    List all problems.
+    """
     tags = request.args.get("tags")
-    problems = problem_service.list_problems(
-        tags=tags.split(",") if tags else None)
+    problems = problem_service.list_problems(tags=tags.split(",") if tags else None)
     return jsonify([p.to_dict() for p in problems])
 
 
 @bp.route("/<int:problem_id>", methods=["GET"])
 def get_problem(problem_id):
+    """
+    Get a single problem by ID.
+    """
     try:
         problem = problem_service.get_problem(problem_id)
         return jsonify(problem.to_dict())
@@ -24,9 +34,14 @@ def get_problem(problem_id):
 
 @bp.route("/", methods=["POST"])
 def create_problem():
+    """
+    Submit a new problem.
+    """
     data = request.json
     try:
-        problem = problem_service.create_problem(**data)
+        problem = problem_service.create_problem(
+            CreateProblemRequest(**data), data["created_by"]
+        )
         return jsonify(problem.to_dict()), 201
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
@@ -34,6 +49,9 @@ def create_problem():
 
 @bp.route("/<int:problem_id>/tags", methods=["PUT"])
 def assign_tag(problem_id):
+    """
+    Assign a tag to a problem.
+    """
     data = request.json
     tag = data.get("tag")
     if not tag:

@@ -1,17 +1,18 @@
-from app import db
-
 """
-This module defines the Problem SQLAlchemy model and the TestCase dataclass for representing programming problems and their test cases.
-
-Classes:
-    Problem: SQLAlchemy model for storing problem details, formats, metadata, test cases, and creator information.
-    TestCase: Dataclass for representing individual test cases with input and output data.
+This module defines the Problem SQLAlchemy model.
+The TestCase dataclass for representing programming problems and their test cases.
 """
 
 from dataclasses import dataclass, asdict
+from app import db
 
 
-class Problem(db.Model):
+class Problem(db.Model):  # pylint: disable=R0903
+    """
+    SQLAlchemy model for storing problem details,
+      formats, metadata, test cases, and creator information.
+    """
+
     __tablename__ = "problems"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -25,6 +26,7 @@ class Problem(db.Model):
     created_by = db.Column(db.Integer, foreign_key="users.id", nullable=False)
 
     def to_dict(self):
+        """Convert the Problem instance to a dictionary."""
         return {
             "id": self.id,
             "name": self.name,
@@ -40,8 +42,27 @@ class Problem(db.Model):
 
 @dataclass
 class TestCase:
+    """Dataclass for representing individual test cases with input and output data."""
+
     input: dict
     output: dict
 
     def to_dict(self):
+        """Convert the TestCase instance to a dictionary."""
+        return asdict(self)
+
+
+@dataclass
+class CreateProblemRequest:
+    """Dataclass for representing a request to create a new problem."""
+
+    name: str
+    description: str
+    input_format: str
+    output_format: str
+    extra_metadata: dict
+    test_cases: list[TestCase]
+
+    def to_dict(self):
+        """Convert the CreateProblemRequest instance to a dictionary."""
         return asdict(self)

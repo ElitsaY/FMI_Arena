@@ -1,3 +1,5 @@
-# This file makes 'users' a Python package
+"""
+This module defines exports from package 'users'.
+"""
 
-# Import the blueprint so it can be registered in the app factory
+from .routes import bp as problems_bp
