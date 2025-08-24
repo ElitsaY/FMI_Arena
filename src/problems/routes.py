@@ -16,8 +16,8 @@ def list_problems() -> tuple[Response, int]:
     """
     List all problems.
     """
-    tags = request.args.get("tags")
-    problems = problem_service.list_problems(tags=tags.split(",") if tags else None)
+    tags_list = request.args.getlist("tags")
+    problems = problem_service.list_problems(tags=tags_list if tags_list else None)
     return jsonify([p.to_dict() for p in problems]), 200
 
 

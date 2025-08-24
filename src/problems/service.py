@@ -22,9 +22,7 @@ class ProblemService:
         List all problems, optionally filtered by tags.
         """
         if tags:
-            return Problem.query.filter(
-                Problem.extra_metadata["tags"].astext.overlap(tags)
-            ).all()
+            return Problem.query.filter(Problem.extra_metadata["tags"] in tags).all()
         return Problem.query.all()
 
     def get_problem(self, problem_id: int) -> Problem:
