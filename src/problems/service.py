@@ -5,7 +5,7 @@ Problem service module for managing problem-related operations.
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.attributes import flag_modified
 
-from app import db
+from infra import db
 from .models import Problem, CreateProblemRequest
 
 

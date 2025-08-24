@@ -4,7 +4,7 @@ Handling submission execution.
 
 import time
 
-from app import db
+from infra import db
 from .models import Submission, SubmissionStatus, SubmissionResult, SubmissionRequest
 from .submission import create_submission
 

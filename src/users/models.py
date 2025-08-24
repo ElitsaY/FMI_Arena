@@ -3,7 +3,7 @@ User model for representing users in the system.
 """
 
 from enum import Enum
-from app import db
+from infra import db
 
 
 class Role(Enum):

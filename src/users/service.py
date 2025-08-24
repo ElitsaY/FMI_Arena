@@ -3,7 +3,7 @@ User service module for managing user-related operations.
 """
 
 from sqlalchemy.exc import IntegrityError
-from app import db
+from infra import db
 from .models import User
 
 session = db.session

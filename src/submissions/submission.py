@@ -6,7 +6,7 @@ import hashlib
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import desc, case
 
-from app import db
+from infra import db
 from .models import Submission, SubmissionStatus, SubmissionRequest
 
 

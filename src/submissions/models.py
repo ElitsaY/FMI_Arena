@@ -4,7 +4,7 @@ from enum import Enum
 from dataclasses import asdict, dataclass
 from typing import Optional, Any
 
-from app import db
+from infra import db
 
 
 class SubmissionStatus(Enum):

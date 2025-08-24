@@ -4,7 +4,7 @@ The TestCase dataclass for representing programming problems and their test case
 """
 
 from dataclasses import dataclass, asdict
-from app import db
+from infra import db
 
 
 class Problem(db.Model):  # pylint: disable=R0903
